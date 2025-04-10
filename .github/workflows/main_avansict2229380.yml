@@ -21,14 +21,16 @@ jobs:
           dotnet-version: '8.x'
 
       # Specify the correct path to your project directory if not in the root
+      #correct the path here
       - name: Build with dotnet
         run: |
-          cd WebApiLU2/API/API/API.csproj
+          cd API/API.sln      
           dotnet build --configuration Release
-
+        
+    #correct the path here
       - name: dotnet publish
         run: |
-          cd  WebApiLU2/API/API/API.csproj  
+          cd  API/API.sln 
           dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
