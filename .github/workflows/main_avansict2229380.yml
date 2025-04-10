@@ -24,13 +24,13 @@ jobs:
       #correct the path here
       - name: Build with dotnet
         run: |
-          cd API/API.sln      
+          cd API/API/API.csproj     
           dotnet build --configuration Release
         
     #correct the path here
       - name: dotnet publish
         run: |
-          cd  API/API.sln 
+          cd  API/API/API.csproj
           dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
