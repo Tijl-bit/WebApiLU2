@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj": {}
+    "C:\\School\\Avans.D\\GitHub\\WebApiLU2\\API\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj": {
+    "C:\\School\\Avans.D\\GitHub\\WebApiLU2\\API\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
+        "projectUniqueName": "C:\\School\\Avans.D\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
+        "projectPath": "C:\\School\\Avans.D\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
         "packagesPath": "C:\\Users\\tijl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\obj\\",
+        "outputPath": "C:\\School\\Avans.D\\GitHub\\WebApiLU2\\API\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,22 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.66, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
