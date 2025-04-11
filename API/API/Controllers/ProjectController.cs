@@ -13,7 +13,7 @@ namespace API.Controllers
         private readonly IObject2DRepository _objectRepo;
 
 
-        //test
+        
         public EnvironmentObjectController(IEnvironment2DRepository environmentRepo, IObject2DRepository objectRepo)
         {
             _environmentRepo = environmentRepo;
