@@ -7,7 +7,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using API.Services;  // Correct namespace for your custom service
+using API.Services;
+using API; 
 
 var builder = WebApplication.CreateBuilder(args);
 
