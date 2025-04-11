@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims; // Required for ClaimTypes
-using API;
-using Microsoft.AspNetCore.Authentication;
-using API.Services; // Add this for your custom services
+using System.Security.Claims;
+using API.Services;
+using API; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,11 +33,10 @@ builder.Services
         options.BearerTokenExpiration = TimeSpan.FromMinutes(60);
     });
 
-// ✅ Add the HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
-// ✅ Register your Authentication Service
-builder.Services.AddScoped<IAuthenticationService, AspNetIdentityAuthenticationService>();
+// Register your authentication service using full namespace:
+builder.Services.AddScoped<API.Services.IAuthenticationService, API.Services.AspNetIdentityAuthenticationService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -58,7 +56,6 @@ var sqlConnectionString = builder.Configuration.GetValue<string>("DefaultConnect
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 
 app.UseAuthorization();
-
 app.MapGroup("/accounts").MapIdentityApi<IdentityUser>();
 
 app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager,

@@ -1,4 +1,4 @@
-﻿namespace API // Change this to match your project namespace
+﻿namespace API.Services // Change this to match your project namespace
 {
     public interface IAuthenticationService
     {
