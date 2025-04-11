@@ -1,11 +1,13 @@
 ﻿using API.Models;
 using API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/environments")]
+    [Authorize]
     public class EnvironmentController : ControllerBase
     {
         private readonly IEnvironment2DRepository _environmentRepo;
@@ -33,3 +35,7 @@ namespace API.Controllers
         {
             var id = await _environmentRepo.InsertAsync(environment);
             return CreatedAtAction(nameof(GetEnvironment), new { id }, id);
+        }
+
+    }
+}

@@ -4,12 +4,39 @@ using API.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using API;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.BearerToken;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+    
 
 // Log connection string status at startup
 var connectionString = builder.Configuration["DefaultConnection"];
 Console.WriteLine($"🔍 Checking SQL Connection: {(!string.IsNullOrWhiteSpace(connectionString) ? "Found" : "Not Found")}");
+
+builder.Services.AddAuthorization();
+builder.Services
+    .AddIdentityApiEndpoints<IdentityUser>(options => {
+        options.User.RequireUniqueEmail = true;
+        options.SignIn.RequireConfirmedAccount = true;
+
+        options.Password.RequireDigit = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireLowercase = true;
+
+    })
+.AddDapperStores(options => { options.ConnectionString = connectionString; });
+
+builder.Services
+        .AddOptions<BearerTokenOptions>(IdentityConstants.BearerScheme)
+        .Configure(options => {
+          options.BearerTokenExpiration = TimeSpan.FromMinutes(60);
+
+        });    
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -27,6 +54,12 @@ var app = builder.Build();
 
 var sqlConnectionString = builder.Configuration.GetValue<string>("DefaultConnection");
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
+
+app.UseAuthorization();
+    
+
+app.MapGroup("/accounts").MapIdentityApi<IdentityUser>();
+
 
 app.MapGet("/", () => $"The API is up. Connection string found: {(sqlConnectionStringFound ? "true" : "false")}");
 

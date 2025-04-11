@@ -1,11 +1,13 @@
 using API.Models;
 using API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/objects")]
+    [Authorize]
     public class ObjectController : ControllerBase
     {
         private readonly IObject2DRepository _objectRepo;
