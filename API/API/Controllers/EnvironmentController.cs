@@ -40,7 +40,13 @@ namespace API.Controllers
 
             // Get current user ID
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
+
+            // Ensure that the user is authenticated and has a valid userId
+            if (userId == null)
+                return Unauthorized("User is not authenticated");
+
             environment.OwnerUserId = userId;
+
             // Get all environments and count how many this user owns
             var existingEnvironments = await _environment2DRepository.GetAllAsync();
             var userEnvironmentCount = existingEnvironments.Count(e => e.OwnerUserId == userId);
@@ -49,10 +55,7 @@ namespace API.Controllers
             if (userEnvironmentCount >= 5)
                 return BadRequest("You can only have a maximum of 5 worlds.");
 
-            var data = environment;
-
-            // Assign user ID and ID
-            data.OwnerUserId = userId;
+            // Set the ID if it's not set
             if (environment.Id == Guid.Empty)
             {
                 environment.Id = Guid.NewGuid();
@@ -61,6 +64,7 @@ namespace API.Controllers
             var id = await _environment2DRepository.InsertAsync(environment);
             return CreatedAtAction(nameof(GetEnvironment), new { id = id }, id);
         }
+
 
 
         [HttpPut]
