@@ -7,7 +7,6 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/environments")]
-    [Authorize]
     public class EnvironmentController : ControllerBase
     {
         private readonly IEnvironment2DRepository _environmentRepo;
