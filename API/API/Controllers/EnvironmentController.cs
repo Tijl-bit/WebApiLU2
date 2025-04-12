@@ -10,7 +10,7 @@ namespace API.Controllers
     [Route("api/environments")]
     public class EnvironmentController : ControllerBase
     {
-        private IAuthenticationService _authenticationService;
+        private readonly IAuthenticationService _authenticationService;
         private readonly IEnvironment2DRepository _environment2DRepository;
 
         public EnvironmentController(IAuthenticationService authenticationService, IEnvironment2DRepository environment2DRepository)
@@ -18,7 +18,6 @@ namespace API.Controllers
             _authenticationService = authenticationService;
             _environment2DRepository = environment2DRepository;
         }
-        
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Environment2D>>> GetEnvironments()
@@ -33,16 +32,40 @@ namespace API.Controllers
             return env == null ? NotFound() : Ok(env);
         }
 
-
-
-     
-        [HttpPut]
-        public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
+        [HttpPost]
+        public async Task<ActionResult<Guid>> CreateEnvironment(Environment2D environment)
         {
-
             if (environment == null)
                 return BadRequest("Invalid environment object");
 
+            // Get current user ID
+            var userId = _authenticationService.GetCurrentAuthenticatedUserId();
+
+            // Get all environments and count how many this user owns
+            var existingEnvironments = await _environment2DRepository.GetAllAsync();
+            var userEnvironmentCount = existingEnvironments.Count(e => e.OwnerUserId == userId);
+
+            // Check max limit
+            if (userEnvironmentCount >= 5)
+                return BadRequest("You can only have a maximum of 5 worlds.");
+
+            // Assign user ID and ID
+            environment.OwnerUserId = userId;
+            if (environment.Id == Guid.Empty)
+            {
+                environment.Id = Guid.NewGuid();
+            }
+
+            var id = await _environment2DRepository.InsertAsync(environment);
+            return CreatedAtAction(nameof(GetEnvironment), new { id = id }, id);
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
+        {
+            if (environment == null)
+                return BadRequest("Invalid environment object");
 
             if (environment.Id == Guid.Empty)
                 return BadRequest("Invalid ID");
@@ -50,11 +73,7 @@ namespace API.Controllers
             if (environment.OwnerUserId != _authenticationService.GetCurrentAuthenticatedUserId())
                 return Unauthorized("User is not allowed to view the environment");
 
-
             return Ok("Environment2D object updated");
         }
-
-
-
     }
 }
