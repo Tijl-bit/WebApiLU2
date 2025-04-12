@@ -34,6 +34,11 @@ namespace API.Repositories
 
         public async Task<Guid> InsertAsync(Environment2D environment)
         {
+            if (environment.OwnerUserId == null)
+            {
+                throw new ArgumentException("OwnerUserId cannot be null");
+            }
+
             using var connection = CreateConnection();
             environment.Id = Guid.NewGuid();
             var sql = "INSERT INTO Environment2D (Id, Name, OwnerUserId, MaxLength, MaxHeight) " +
