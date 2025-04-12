@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net9.0": {
-      "Avans.Identity.DapperOrm/1.0.3": {
+      "Avans.Identity.DapperOrm/1.0.2": {
         "type": "package",
         "dependencies": {
           "Dapper": "2.1.35",
@@ -987,15 +987,15 @@
     }
   },
   "libraries": {
-    "Avans.Identity.DapperOrm/1.0.3": {
-      "sha512": "kSoiZosdq/cEXz6f+FNp04YW+N7vF5y1s7WGQEK3vzJtvxHZ2546gcpImWN5wHH29W9J6vE30zcuq0L9ZBmXkQ==",
+    "Avans.Identity.DapperOrm/1.0.2": {
+      "sha512": "W8jdj/HXfh7Mej4nidyNOvzXiU5601ocVHblzVvUcflQBnXP1o97j3Nr6+YPi6qEovCFjYduRRoS4OOp7kjz8w==",
       "type": "package",
-      "path": "avans.identity.dapperorm/1.0.3",
+      "path": "avans.identity.dapperorm/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "README.md",
-        "avans.identity.dapperorm.1.0.3.nupkg.sha512",
+        "avans.identity.dapperorm.1.0.2.nupkg.sha512",
         "avans.identity.dapperorm.nuspec",
         "lib/net8.0/Avans.Identity.Dapper.dll",
         "lib/net8.0/Avans.Identity.Dapper.pdb",
@@ -2678,7 +2678,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "Avans.Identity.DapperOrm >= 1.0.3",
+      "Avans.Identity.DapperOrm >= 1.0.2",
       "Dapper >= 2.1.66",
       "Microsoft.Data.SqlClient >= 6.0.1",
       "Microsoft.EntityFrameworkCore >= 9.0.4",
@@ -2738,7 +2738,7 @@
         "dependencies": {
           "Avans.Identity.DapperOrm": {
             "target": "Package",
-            "version": "[1.0.3, )"
+            "version": "[1.0.2, )"
           },
           "Dapper": {
             "target": "Package",

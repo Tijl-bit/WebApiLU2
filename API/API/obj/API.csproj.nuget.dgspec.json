@@ -52,7 +52,7 @@
           "dependencies": {
             "Avans.Identity.DapperOrm": {
               "target": "Package",
-              "version": "[1.0.3, )"
+              "version": "[1.0.2, )"
             },
             "Dapper": {
               "target": "Package",

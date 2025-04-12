@@ -21,10 +21,13 @@ builder.Services
     .AddIdentityApiEndpoints<IdentityUser>(options => {
         options.User.RequireUniqueEmail = true;
         options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false; // Disable 2FA based on phone number
+        options.Tokens.AuthenticatorTokenProvider = null; // Disable 2FA authenticator token provider
         options.Password.RequireDigit = true;
         options.Password.RequireUppercase = true;
         options.Password.RequireLowercase = true;
     })
+    
     .AddDapperStores(options => { options.ConnectionString = connectionString; });
 
 builder.Services

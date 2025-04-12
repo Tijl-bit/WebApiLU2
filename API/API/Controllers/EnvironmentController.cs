@@ -33,9 +33,20 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateEnvironment(Environment2D environment)
         {
+            // Get user ID from the JWT claims
+            var userIdClaim = User.FindFirst("sub") ?? User.FindFirst("id"); // Check your token claim names
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            // Assign the string user ID to the environment
+            environment.OwnerUserId = userIdClaim.Value;
+
             var id = await _environmentRepo.InsertAsync(environment);
             return CreatedAtAction(nameof(GetEnvironment), new { id }, id);
         }
+
 
     }
 }

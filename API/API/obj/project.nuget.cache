@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "x2xFRFLV0wQ=",
+  "dgSpecHash": "NkE4CDJyy04=",
   "success": true,
   "projectFilePath": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\tijl\\.nuget\\packages\\avans.identity.dapperorm\\1.0.3\\avans.identity.dapperorm.1.0.3.nupkg.sha512",
+    "C:\\Users\\tijl\\.nuget\\packages\\avans.identity.dapperorm\\1.0.2\\avans.identity.dapperorm.1.0.2.nupkg.sha512",
     "C:\\Users\\tijl\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\tijl\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\tijl\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
