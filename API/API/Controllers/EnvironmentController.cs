@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using API.Repositories;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,42 +10,50 @@ namespace API.Controllers
     [Route("api/environments")]
     public class EnvironmentController : ControllerBase
     {
-        private readonly IEnvironment2DRepository _environmentRepo;
+        private IAuthenticationService _authenticationService;
+        private readonly IEnvironment2DRepository _environment2DRepository;
 
-        public EnvironmentController(IEnvironment2DRepository environmentRepo)
+        public EnvironmentController(IAuthenticationService authenticationService, IEnvironment2DRepository environment2DRepository)
         {
-            _environmentRepo = environmentRepo;
+            _authenticationService = authenticationService;
+            _environment2DRepository = environment2DRepository;
         }
+        
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Environment2D>>> GetEnvironments()
         {
-            return Ok(await _environmentRepo.GetAllAsync());
+            return Ok(await _environment2DRepository.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Environment2D>> GetEnvironment(Guid id)
         {
-            var env = await _environmentRepo.GetByIdAsync(id);
+            var env = await _environment2DRepository.GetByIdAsync(id);
             return env == null ? NotFound() : Ok(env);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Guid>> CreateEnvironment(Environment2D environment)
+
+
+     
+        [HttpPut]
+        public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
         {
-            // Get user ID from the JWT claims
-            var userIdClaim = User.FindFirst("sub") ?? User.FindFirst("id"); // Check your token claim names
-            if (userIdClaim == null)
-            {
-                return Unauthorized();
-            }
 
-            // Assign the string user ID to the environment
-            environment.OwnerUserId = userIdClaim.Value;
+            if (environment == null)
+                return BadRequest("Invalid environment object");
 
-            var id = await _environmentRepo.InsertAsync(environment);
-            return CreatedAtAction(nameof(GetEnvironment), new { id }, id);
+
+            if (environment.Id == Guid.Empty)
+                return BadRequest("Invalid ID");
+
+            if (environment.OwnerUserId != _authenticationService.GetCurrentAuthenticatedUserId())
+                return Unauthorized("User is not allowed to view the environment");
+
+
+            return Ok("Environment2D object updated");
         }
+
 
 
     }
