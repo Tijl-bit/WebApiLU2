@@ -32,6 +32,20 @@ namespace API.Controllers
             return env == null ? NotFound() : Ok(env);
         }
 
+        [HttpDelete]
+        public async Task<ActionResult<IEnumerable<Environment2D>>> DeleteEnvironments()
+        {
+            return Ok(await _environment2DRepository.GetAllAsync());
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Environment2D>> DeleteEnvironment(Guid id)
+        {
+            var env = await _environment2DRepository.GetByIdAsync(id);
+            return env == null ? NotFound() : Ok(env);
+        }
+
+
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateEnvironment(Environment2D environment)
         {

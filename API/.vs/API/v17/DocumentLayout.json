@@ -93,8 +93,7 @@
               "RelativeToolTip": "API\\Services\\AspNetIdentityAuthenticationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T23:25:10.392Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T23:25:10.392Z"
             },
             {
               "$type": "Document",
@@ -106,8 +105,7 @@
               "RelativeToolTip": "API\\Program.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAAABoAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T14:36:54.534Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T14:36:54.534Z"
             },
             {
               "$type": "Document",
@@ -143,8 +141,7 @@
               "RelativeToolTip": "API\\Models\\Environment2D.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T21:57:08.138Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T21:57:08.138Z"
             },
             {
               "$type": "Document",
@@ -156,8 +153,7 @@
               "RelativeToolTip": "API\\Services\\IAuthenticationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T23:20:05.957Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T23:20:05.957Z"
             },
             {
               "$type": "Document",
@@ -165,9 +161,9 @@
               "Title": "EnvironmentController.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Controllers\\EnvironmentController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\EnvironmentController.cs",
-              "ToolTip": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Controllers\\EnvironmentController.cs",
-              "RelativeToolTip": "API\\Controllers\\EnvironmentController.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAQwEMAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Controllers\\EnvironmentController.cs*",
+              "RelativeToolTip": "API\\Controllers\\EnvironmentController.cs*",
+              "ViewState": "AgIAABkAAAAAAAAAAAAAACcAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-11T14:27:01.038Z",
               "EditorCaption": ""
@@ -182,8 +178,7 @@
               "RelativeToolTip": "API\\Repositories\\Environment2DRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T21:56:52.542Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T21:56:52.542Z"
             },
             {
               "$type": "Document",
@@ -195,8 +190,7 @@
               "RelativeToolTip": "API\\Repositories\\IEnvironment2DRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T23:23:24.268Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T23:23:24.268Z"
             },
             {
               "$type": "Document",
@@ -220,8 +214,7 @@
               "RelativeToolTip": "API\\Repositories\\IObject2DRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T02:29:54.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-12T02:29:54.297Z"
             },
             {
               "$type": "Document",
@@ -245,8 +238,7 @@
               "RelativeToolTip": "API\\Repositories\\Object2DRepository.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T21:57:02.817Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T21:57:02.817Z"
             },
             {
               "$type": "Document",
