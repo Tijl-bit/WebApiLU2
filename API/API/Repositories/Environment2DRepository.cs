@@ -20,10 +20,10 @@ namespace API.Repositories
 
         private IDbConnection CreateConnection() => new SqlConnection(_connectionString);
 
-        public async Task<IEnumerable<Environment2D>> GetAllAsync()
+        public async Task<IEnumerable<Environment2D>> GetAllAsync(string id)
         {
             using var connection = CreateConnection();
-            return await connection.QueryAsync<Environment2D>("SELECT * FROM Environment2D");
+            return await connection.QueryAsync<Environment2D>("SELECT * FROM Environment2D WHERE OwnerUserId = @Id", new { Id = id });
         }
 
         public async Task<Environment2D> GetByIdAsync(Guid id)

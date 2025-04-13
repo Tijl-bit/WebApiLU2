@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using System;
+using API.Models;
 using API.Repositories;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +23,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Environment2D>>> GetEnvironments()
         {
-            return Ok(await _environment2DRepository.GetAllAsync());
+            var id = _authenticationService.GetCurrentAuthenticatedUserId();
+            return Ok(await _environment2DRepository.GetAllAsync(id));
         }
 
         [HttpGet("{id}")]
@@ -32,23 +34,29 @@ namespace API.Controllers
             return env == null ? NotFound() : Ok(env);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<IEnumerable<Environment2D>>> DeleteEnvironments()
-        {
-            return Ok(await _environment2DRepository.GetAllAsync());
-        }
-
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Environment2D>> DeleteEnvironment(Guid id)
+        public async Task<IActionResult> DeleteEnvironment(Guid id)
         {
             var env = await _environment2DRepository.GetByIdAsync(id);
-            return env == null ? NotFound() : Ok(env);
+            if (env == null)
+                return NotFound();
+
+            // Optional: Only allow the owner to delete
+            var currentUserId = _authenticationService.GetCurrentAuthenticatedUserId();
+            if (env.OwnerUserId != currentUserId)
+                return Unauthorized("You are not allowed to delete this environment.");
+
+            await _environment2DRepository.DeleteAsync(id);
+            return NoContent(); // 204 No Content is standard for successful deletes
         }
+
 
 
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateEnvironment(Environment2D environment)
         {
+           
+
             if (environment == null)
                 return BadRequest("Invalid environment object");
 
@@ -62,7 +70,8 @@ namespace API.Controllers
             environment.OwnerUserId = userId;
 
             // Get all environments and count how many this user owns
-            var existingEnvironments = await _environment2DRepository.GetAllAsync();
+
+            var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
             var userEnvironmentCount = existingEnvironments.Count(e => e.OwnerUserId == userId);
 
             // Check max limit
@@ -78,8 +87,6 @@ namespace API.Controllers
             var id = await _environment2DRepository.InsertAsync(environment);
             return CreatedAtAction(nameof(GetEnvironment), new { id = id }, id);
         }
-
-
 
         [HttpPut]
         public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
