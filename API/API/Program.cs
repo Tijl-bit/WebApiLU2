@@ -76,6 +76,7 @@ app.MapGet("/", () => $"The API is up. Connection string found: {(sqlConnectionS
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
