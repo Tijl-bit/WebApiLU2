@@ -4,6 +4,7 @@ using API.Repositories;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 namespace API.Controllers
 {
     [ApiController]
@@ -47,7 +48,7 @@ namespace API.Controllers
             Object2D objecten2D = new Object2D
             {
                 Id = Guid.NewGuid(),
-                EnvironmentId = new Guid(object2D.EnvironmentId),
+                EnvironmentId = Guid.Parse(object2D.EnvironmentId),
                 PrefabId = object2D.PrefabId,
                 PositionX = object2D.PositionX,
                 PositionY = object2D.PositionY,
@@ -55,11 +56,12 @@ namespace API.Controllers
                 ScaleX = object2D.ScaleX,
                 ScaleY = object2D.ScaleY,
                 SortingLayer = object2D.SortingLayer
-            };  
+            };
 
             var environment = await _envRepo.GetByIdAsync(objecten2D.EnvironmentId);
-            if (environment == null)
-                return NotFound("Environment not found");
+            //if (environment == null)
+            //    return NotFound("Environment not found");
+
 
             if (environment.OwnerUserId != _authService.GetCurrentAuthenticatedUserId())
                 return Unauthorized("You do not own this environment");
