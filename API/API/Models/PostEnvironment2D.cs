@@ -1,12 +1,9 @@
 ﻿namespace API.Models
 {
-    public class Environment2D
+    public class PostEnvironment2D
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = string.Empty;
-        public string OwnerUserId { get; set; }
         public int MaxLength { get; set; }
         public int MaxHeight { get; set; }
     }
-    
 }

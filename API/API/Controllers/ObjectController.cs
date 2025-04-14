@@ -39,20 +39,32 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddObject([FromBody] Object2D object2D)
+        public async Task<IActionResult> AddObject([FromBody] PostObject2D object2D)
         {
-            if (object2D.EnvironmentId == Guid.Empty)
+            if (object2D == null)
                 return BadRequest("Invalid environment ID");
 
-            var environment = await _envRepo.GetByIdAsync(object2D.EnvironmentId);
+            Object2D objecten2D = new Object2D
+            {
+                Id = Guid.NewGuid(),
+                EnvironmentId = new Guid(object2D.EnvironmentId),
+                PrefabId = object2D.PrefabId,
+                PositionX = object2D.PositionX,
+                PositionY = object2D.PositionY,
+                RotationZ = object2D.RotationZ,
+                ScaleX = object2D.ScaleX,
+                ScaleY = object2D.ScaleY,
+                SortingLayer = object2D.SortingLayer
+            };  
+
+            var environment = await _envRepo.GetByIdAsync(objecten2D.EnvironmentId);
             if (environment == null)
                 return NotFound("Environment not found");
 
             if (environment.OwnerUserId != _authService.GetCurrentAuthenticatedUserId())
                 return Unauthorized("You do not own this environment");
-
-            object2D.Id = Guid.NewGuid();
-            await _objectRepo.InsertAsync(object2D);
+  
+            await _objectRepo.InsertAsync(objecten2D);
 
             return Ok(object2D);
         }

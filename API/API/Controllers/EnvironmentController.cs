@@ -53,7 +53,7 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateEnvironment(Environment2D environment)
+        public async Task<ActionResult<Guid>> CreateEnvironment(PostEnvironment2D environment)
         {
 
 
@@ -66,9 +66,15 @@ namespace API.Controllers
             // Ensure that the user is authenticated and has a valid userId
             if (userId == null)
                 return Unauthorized("User is not authenticated");
-
-            environment.OwnerUserId = userId;
-
+            Environment2D environ = new Environment2D()
+            {
+                Id = new Guid(),
+                OwnerUserId = userId,
+                Name = environment.Name,
+                MaxLength = environment.MaxLength,
+                MaxHeight = environment.MaxHeight
+            };
+           
             // Get all environments and count how many this user owns
 
             var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
@@ -79,12 +85,12 @@ namespace API.Controllers
                 return BadRequest("You can only have a maximum of 5 worlds.");
 
             // Set the ID if it's not set
-            if (environment.Id == Guid.Empty)
+            if (environ.Id == Guid.Empty)
             {
-                environment.Id = Guid.NewGuid();
+                environ.Id = Guid.NewGuid();
             }
 
-            var id = await _environment2DRepository.InsertAsync(environment);
+            var id = await _environment2DRepository.InsertAsync(environ);
             return CreatedAtAction(nameof(GetEnvironment), new { id = id }, id);
         }
 
