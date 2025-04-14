@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public Guid EnvironmentId { get; set; }
-        public int PrefabId { get; set; }
+        public string PrefabId { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
         public float ScaleX { get; set; }
