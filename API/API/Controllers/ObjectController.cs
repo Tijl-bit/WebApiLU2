@@ -1,8 +1,9 @@
+using System;
 using API.Models;
 using API.Repositories;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace API.Controllers
 {
     [ApiController]
@@ -11,10 +12,17 @@ namespace API.Controllers
     public class ObjectController : ControllerBase
     {
         private readonly IObject2DRepository _objectRepo;
+        private readonly IEnvironment2DRepository _envRepo;
+        private readonly IAuthenticationService _authService;
 
-        public ObjectController(IObject2DRepository objectRepo)
+        public ObjectController(
+            IObject2DRepository objectRepo,
+            IEnvironment2DRepository envRepo,
+            IAuthenticationService authService)
         {
             _objectRepo = objectRepo;
+            _envRepo = envRepo;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -31,10 +39,22 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateObject(Object2D object2D)
+        public async Task<IActionResult> AddObject([FromBody] Object2D object2D)
         {
-            var id = await _objectRepo.InsertAsync(object2D);
-            return CreatedAtAction(nameof(GetObject), new { id }, id);
+            if (object2D.EnvironmentId == Guid.Empty)
+                return BadRequest("Invalid environment ID");
+
+            var environment = await _envRepo.GetByIdAsync(object2D.EnvironmentId);
+            if (environment == null)
+                return NotFound("Environment not found");
+
+            if (environment.OwnerUserId != _authService.GetCurrentAuthenticatedUserId())
+                return Unauthorized("You do not own this environment");
+
+            object2D.Id = Guid.NewGuid();
+            await _objectRepo.InsertAsync(object2D);
+
+            return Ok(object2D);
         }
 
         [HttpPut("{id}")]
