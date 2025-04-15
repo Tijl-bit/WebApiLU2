@@ -117,6 +117,22 @@
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
+=======
+              "DocumentIndex": 3,
+              "Title": "Object2DRepository.cs",
+              "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Object2DRepository.cs",
+              "RelativeDocumentMoniker": "API\\Repositories\\Object2DRepository.cs",
+              "ToolTip": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Object2DRepository.cs",
+              "RelativeToolTip": "API\\Repositories\\Object2DRepository.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAQwD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T21:57:02.817Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+>>>>>>> Stashed changes
               "DocumentIndex": 2,
               "Title": "AspNetIdentityAuthenticationService.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Services\\AspNetIdentityAuthenticationService.cs",
@@ -165,6 +181,7 @@
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 3,
               "Title": "Object2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Object2DRepository.cs",
@@ -177,6 +194,8 @@
             },
             {
               "$type": "Document",
+=======
+>>>>>>> Stashed changes
               "DocumentIndex": 7,
               "Title": "Environment2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Environment2DRepository.cs",
