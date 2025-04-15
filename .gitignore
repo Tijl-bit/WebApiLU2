@@ -7,6 +7,7 @@ obj/
 
 # Ignore Visual Studio Code settings (optional)
 .vscode/
+API/.vs/API/v17/.suo
 *.db
 API/.vs/API/CopilotIndices/17.12.53.23981/SemanticSymbols.db-wal
 API/.vs/API/CopilotIndices/17.12.53.23981/SemanticSymbols.db-shm
