@@ -118,7 +118,10 @@
             {
               "$type": "Document",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
               "DocumentIndex": 3,
               "Title": "Object2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Object2DRepository.cs",
@@ -132,6 +135,9 @@
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
               "DocumentIndex": 2,
               "Title": "AspNetIdentityAuthenticationService.cs",
@@ -182,6 +188,7 @@
             {
               "$type": "Document",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               "DocumentIndex": 3,
               "Title": "Object2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Object2DRepository.cs",
@@ -194,6 +201,8 @@
             },
             {
               "$type": "Document",
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
               "DocumentIndex": 7,
