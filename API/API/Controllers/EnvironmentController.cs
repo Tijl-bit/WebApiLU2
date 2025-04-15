@@ -55,40 +55,44 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateEnvironment(PostEnvironment2D environment)
         {
+
+
             if (environment == null)
                 return BadRequest("Invalid environment object");
 
             // Get current user ID
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
+
+            // Ensure that the user is authenticated and has a valid userId
             if (userId == null)
                 return Unauthorized("User is not authenticated");
-
-            // Get all environments and count how many this user owns
-            var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
-            var userEnvironmentCount = existingEnvironments.Count(e => e.OwnerUserId == userId);
-
-            // ✅ Check if a world with the same name already exists for this user
-            var nameExists = existingEnvironments.Any(e => e.Name.Equals(environment.Name, StringComparison.OrdinalIgnoreCase));
-            if (nameExists)
-                return BadRequest("You already have a world with this name.");
-
-            // Check max limit
-            if (userEnvironmentCount >= 5)
-                return BadRequest("You can only have a maximum of 5 worlds.");
-
             Environment2D environ = new Environment2D()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid(),
                 OwnerUserId = userId,
                 Name = environment.Name,
                 MaxLength = environment.MaxLength,
                 MaxHeight = environment.MaxHeight
             };
+           
+            // Get all environments and count how many this user owns
+
+            var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
+            var userEnvironmentCount = existingEnvironments.Count(e => e.OwnerUserId == userId);
+
+            // Check max limit
+            if (userEnvironmentCount >= 5)
+                return BadRequest("You can only have a maximum of 5 worlds.");
+
+            // Set the ID if it's not set
+            if (environ.Id == Guid.Empty)
+            {
+                environ.Id = Guid.NewGuid();
+            }
 
             var id = await _environment2DRepository.InsertAsync(environ);
             return CreatedAtAction(nameof(GetEnvironment), new { id = id }, id);
         }
-
 
         [HttpPut]
         public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
