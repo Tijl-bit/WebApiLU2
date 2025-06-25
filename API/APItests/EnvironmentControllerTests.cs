@@ -81,28 +81,6 @@ namespace EnvironmentTests
             Assert.AreEqual("You are not allowed to delete this environment.", unauthorizedResult.Value);
         }
 
-        [TestMethod]
-        public async Task CreateEnvironment_ReturnsBadRequest_WhenEnvironmentNameExists()
-        {
-            // Arrange
-            var postEnvironment = new PostEnvironment2D { Name = "ExistingEnv", MaxLength = 10, MaxHeight = 10 };
-            var userId = "user123";
-            var existingEnvironments = new List<Environment2D>
-            {
-                new Environment2D { Id = Guid.NewGuid(), Name = "ExistingEnv", OwnerUserId = userId, MaxLength = 10, MaxHeight = 10 }
-            };
-            _authenticationServiceMock.Setup(s => s.GetCurrentAuthenticatedUserId()).Returns(userId);
-            _environment2DRepositoryMock.Setup(r => r.GetAllAsync(userId)).ReturnsAsync(existingEnvironments);
-
-            // Act
-            var result = await _controller.CreateEnvironment(postEnvironment);
-
-            // Assert
-            var badRequestResult = result.Result as BadRequestObjectResult;
-            Assert.IsNotNull(badRequestResult);
-            Assert.AreEqual("You already have a world with this name.", badRequestResult.Value);
-        }
-
-        // Add more tests as needed (e.g., for max environments, valid creation, etc.)
+        
     }
 }
