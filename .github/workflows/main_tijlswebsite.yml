@@ -23,11 +23,11 @@ jobs:
         with:
           dotnet-version: '9.x'
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Restore dependencies
+        run: dotnet restore ${{ secrets.WEBAPI_PROJECT_NAME }}
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: Build
+        run: dotnet build ${{ secrets.WEBAPI_PROJECT_NAME }} --no-restore
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
