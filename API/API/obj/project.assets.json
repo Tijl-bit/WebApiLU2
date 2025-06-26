@@ -2687,23 +2687,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tijl\\.nuget\\packages\\": {},
+    "C:\\Users\\Tijl Sinon\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
+      "projectUniqueName": "E:\\WebApiLU2\\API\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\tijl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\obj\\",
+      "projectPath": "E:\\WebApiLU2\\API\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\Tijl Sinon\\.nuget\\packages\\",
+      "outputPath": "E:\\WebApiLU2\\API\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\tijl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Tijl Sinon\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2712,6 +2712,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
