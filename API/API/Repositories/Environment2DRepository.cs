@@ -32,11 +32,27 @@ namespace API.Repositories
             return await connection.QuerySingleOrDefaultAsync<Environment2D>("SELECT * FROM Environment2D WHERE Id = @Id", new { Id = id });
         }
 
+        // New method to check if environment with same name and owner exists
+        public async Task<bool> ExistsWithNameAsync(string ownerUserId, string name)
+        {
+            using var connection = CreateConnection();
+            var sql = "SELECT COUNT(1) FROM Environment2D WHERE OwnerUserId = @OwnerUserId AND Name = @Name";
+            int count = await connection.ExecuteScalarAsync<int>(sql, new { OwnerUserId = ownerUserId, Name = name });
+            return count > 0;
+        }
+
         public async Task<Guid> InsertAsync(Environment2D environment)
         {
             if (environment.OwnerUserId == null)
             {
                 throw new ArgumentException("OwnerUserId cannot be null");
+            }
+
+            // Check for duplicates before inserting
+            bool exists = await ExistsWithNameAsync(environment.OwnerUserId, environment.Name);
+            if (exists)
+            {
+                throw new InvalidOperationException("An environment with this name already exists for this user.");
             }
 
             using var connection = CreateConnection();
@@ -59,7 +75,5 @@ namespace API.Repositories
             using var connection = CreateConnection();
             return await connection.ExecuteAsync("DELETE FROM Environment2D WHERE Id = @Id", new { Id = id }) > 0;
         }
-        
     }
-
 }
