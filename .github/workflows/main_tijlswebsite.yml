@@ -1,7 +1,7 @@
 name: Build, Test and Deploy a .NET Core WebApi to Azure App Service
 
 env:
-  ARTIFACT_NAME: WebApi
+  app-name: 'TijlsWebsite'
   DOTNET_CORE_VERSION: 9.0.x
   PUBLISH_DIRECTORY: ./publish
 
