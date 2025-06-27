@@ -1,7 +1,9 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
+name: Build, Test and Deploy a .NET Core WebApi to Azure App Service
 
-name: Build and deploy ASP.Net Core app to Azure Web App - TijlsWebsite
+env:
+  ARTIFACT_NAME: WebApi
+  DOTNET_CORE_VERSION: 9.0.x
+  PUBLISH_DIRECTORY: ./publish
 
 on:
   push:
@@ -10,8 +12,36 @@ on:
   workflow_dispatch:
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if AZURE_WEBAPP_NAME secret exists
+        env:
+          super_secret: ${{ secrets.AZURE_WEBAPP_NAME }}
+        if: ${{ env.super_secret == '' }}
+        run: echo "The secret AZURE_WEBAPP_NAME has not been made; please go to settings > Actions secrets and variables > actions to create it" && exit 1
+
+      - name: Check if AZURE_WEBAPP_PUBLISH_PASSWORD secret exists
+        env:
+          super_secret: ${{ secrets.AZURE_WEBAPP_PUBLISH_PASSWORD }}
+        if: ${{ env.super_secret == '' }}
+        run: echo "The secret AZURE_WEBAPP_PUBLISH_PASSWORD has not been made; please go to settings > Actions secrets and variables > actions to create it" && exit 1
+
+      - name: Check if AZURE_WEBAPP_PUBLISH_USERNAME secret exists
+        env:
+          super_secret: ${{ secrets.AZURE_WEBAPP_PUBLISH_USERNAME }}
+        if: ${{ env.super_secret == '' }}
+        run: echo "The secret AZURE_WEBAPP_PUBLISH_USERNAME has not been made; please go to settings > Actions secrets and variables > actions to create it" && exit 1
+
+      - name: Check if WEBAPI_PROJECT_NAME secret exists
+        env:
+          super_secret: ${{ secrets.WEBAPI_PROJECT_NAME }}
+        if: ${{ env.super_secret == '' }}
+        run: echo "The secret WEBAPI_PROJECT_NAME has not been made; please go to settings > Actions secrets and variables > actions to create it" && exit 1
+
   build:
     runs-on: windows-latest
+    needs: check
     permissions:
       contents: read
 
@@ -22,7 +52,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.x'
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Restore dependencies
         run: dotnet restore ${{ secrets.WEBAPI_PROJECT_NAME }}
@@ -30,18 +60,21 @@ jobs:
       - name: Build
         run: dotnet build ${{ secrets.WEBAPI_PROJECT_NAME }} --no-restore
 
+      - name: Test
+        run: dotnet test ${{ secrets.WEBAPI_PROJECT_NAME }} --no-build --verbosity normal
+
       - name: Publish
-        run: dotnet publish ${{ secrets.WEBAPI_PROJECT_NAME }} -c Release -o ./publish
+        run: dotnet publish ${{ secrets.WEBAPI_PROJECT_NAME }} -c Release -o ${{ env.PUBLISH_DIRECTORY }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ./publish
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.PUBLISH_DIRECTORY }}
 
   deploy:
     runs-on: windows-latest
-    needs: build
+    needs: [check, build]
     permissions:
       id-token: write
       contents: read
@@ -50,7 +83,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
+          name: ${{ env.ARTIFACT_NAME }}
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -63,6 +96,8 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'TijlsWebsite'
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           slot-name: 'Production'
-          package: .
+          package: ${{ env.PUBLISH_DIRECTORY }}
+          username: ${{ secrets.AZURE_WEBAPP_PUBLISH_USERNAME }}
+          password: ${{ secrets.AZURE_WEBAPP_PUBLISH_PASSWORD }}
