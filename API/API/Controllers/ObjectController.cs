@@ -86,7 +86,10 @@ namespace API.Controllers
         [HttpGet("by-environment")]
         public async Task<IActionResult> GetByEnvironment([FromQuery] Guid environmentId)
         {
-            var objects = await _objectRepo.GetByEnvironmentIdAsync(environmentId);
+            var userId = _authenticationService.GetCurrentUserId();
+
+            var objects = await _objectService.GetByEnvironmentIdAsync(environmentId, userId);
+
             return Ok(objects);
         }
 
