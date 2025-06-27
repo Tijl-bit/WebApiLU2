@@ -46,8 +46,9 @@ builder.Services.AddScoped<IAuthenticationService, AspNetIdentityAuthenticationS
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddSingleton<IEnvironment2DRepository>(new Environment2DRepository(connectionString));
-builder.Services.AddSingleton<IObject2DRepository>(new Object2DRepository(connectionString));
+// Fix: Use factory method overload to register repositories
+builder.Services.AddSingleton<IEnvironment2DRepository>(provider => (IEnvironment2DRepository)new Environment2DRepository(connectionString));
+builder.Services.AddSingleton<IObject2DRepository>(provider => (IObject2DRepository)new Object2DRepository(connectionString));
 
 // ✅ Add basic services
 builder.Services.AddControllers();

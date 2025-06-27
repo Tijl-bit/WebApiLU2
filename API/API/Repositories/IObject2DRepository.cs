@@ -9,5 +9,6 @@ namespace API.Repositories
         Task<Guid> InsertAsync(Object2D object2D);
         Task<bool> UpdateAsync(Object2D object2D);
         Task<bool> DeleteAsync(Guid id);
+        Task<IEnumerable<Object2D>> GetByEnvironmentIdAsync(Guid environmentId);
     }
 }

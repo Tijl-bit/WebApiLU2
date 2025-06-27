@@ -1,11 +1,14 @@
 ﻿using API.Models;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace API.Repositories
 {
-    public class Object2DRepository : IObject2DRepository
+    public class Object2DRepository : ControllerBase
+
+
     {
         private readonly string _connectionString;
 
