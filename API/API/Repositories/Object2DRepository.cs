@@ -67,7 +67,7 @@ namespace API.Repositories
             var sql = "SELECT * FROM Object2D WHERE EnvironmentId = @EnvironmentId";
             return await connection.QueryAsync<Object2D>(sql, new { EnvironmentId = environmentId });
         }
-        
+
 
     }
 }

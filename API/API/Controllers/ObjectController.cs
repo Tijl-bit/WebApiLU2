@@ -26,14 +26,18 @@ namespace API.Controllers
             _authService = authService;
         }
 
-        
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Object2D>>> GetObjects()
+        {
+            return Ok(await _objectRepo.GetAllAsync());
+        }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Object2D>> GetObject(Guid id)
-        //{
-        //    var obj = await _objectRepo.GetByIdAsync(id);
-        //    return obj == null ? NotFound() : Ok(obj);
-        //}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Object2D>> GetObject(Guid id)
+        {
+            var obj = await _objectRepo.GetByIdAsync(id);
+            return obj == null ? NotFound() : Ok(obj);
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddObject([FromBody] PostObject2D object2D)
@@ -61,7 +65,7 @@ namespace API.Controllers
 
             if (environment.OwnerUserId != _authService.GetCurrentAuthenticatedUserId())
                 return Unauthorized("You do not own this environment");
-  
+
             await _objectRepo.InsertAsync(objecten2D);
 
             return Ok(object2D);
