@@ -3,6 +3,7 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace API.Repositories
 {
@@ -22,13 +23,17 @@ namespace API.Repositories
             _connectionString = connectionString;
         }
 
+
+
         private IDbConnection CreateConnection() => new SqlConnection(_connectionString);
 
         public async Task<IEnumerable<Object2D>> GetByEnvironmentIdAsync(Guid environmentId)
         {
+            using var connection = CreateConnection();
             var sql = "SELECT * FROM Object2D WHERE EnvironmentId = @EnvironmentId";
-            return await _connection.QueryAsync<Object2D>(sql, new { EnvironmentId = environmentId });
+            return await connection.QueryAsync<Object2D>(sql, new { EnvironmentId = environmentId });
         }
+
 
 
         public async Task<Object2D> GetByIdAsync(Guid id) // Gebruik Guid
@@ -62,10 +67,7 @@ namespace API.Repositories
             using var connection = CreateConnection();
             return await connection.ExecuteAsync("DELETE FROM Object2D WHERE Id = @Id", new { Id = id }) > 0;
         }
-        public async Task<IEnumerable<Object2D>> GetByEnvironmentIdAsync(Guid environmentId, Guid userId)
-        {
-            return await _objectRepository.GetByEnvironmentIdAsync(environmentId, userId);
-        }
+       
 
 
     }
