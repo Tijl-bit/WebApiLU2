@@ -28,12 +28,12 @@ namespace API.Controllers
 
         
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Object2D>> GetObject(Guid id)
-        {
-            var obj = await _objectRepo.GetByIdAsync(id);
-            return obj == null ? NotFound() : Ok(obj);
-        }
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Object2D>> GetObject(Guid id)
+        //{
+        //    var obj = await _objectRepo.GetByIdAsync(id);
+        //    return obj == null ? NotFound() : Ok(obj);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> AddObject([FromBody] PostObject2D object2D)
