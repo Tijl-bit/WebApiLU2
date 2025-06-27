@@ -64,9 +64,8 @@ namespace API.Repositories
         public async Task<IEnumerable<Object2D>> GetByEnvironmentIdAsync(string environmentId)
         {
             using var connection = CreateConnection();
-            return await connection.QueryAsync<Object2D>(
-                "SELECT * FROM Object2D WHERE EnvironmentId = @EnvironmentId",
-                new { EnvironmentId = environmentId });
+            var sql = "SELECT * FROM Object2D WHERE EnvironmentId = @EnvironmentId";
+            return await connection.QueryAsync<Object2D>(sql, new { EnvironmentId = environmentId });
         }
 
 
