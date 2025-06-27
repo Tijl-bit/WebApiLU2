@@ -15,39 +15,8 @@ env:
   ARTIFACT_NAME: 'dotnet-app'
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Check if AZURE_WEBAPP_NAME secret exists"
-        env: 
-          super_secret: ${{ secrets.AZURE_WEBAPP_NAME }}
-        if: ${{ env.super_secret == '' }}
-        run: |
-          echo "❌ The secret 'AZURE_WEBAPP_NAME' has not been set."
-          echo "➡️ Go to Settings > Secrets and Variables > Actions to create it."
-          exit 1
-
-      - name: "Check if AZURE_WEBAPP_PUBLISH_PROFILE secret exists"
-        env: 
-          super_secret: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        if: ${{ env.super_secret == '' }}
-        run: |
-          echo "❌ The secret 'AZURE_WEBAPP_PUBLISH_PROFILE' has not been set."
-          echo "➡️ Go to Settings > Secrets and Variables > Actions to create it."
-          exit 1
-
-      - name: "Check if WEBAPI_PROJECT_NAME secret exists"
-        env: 
-          super_secret: ${{ secrets.WEBAPI_PROJECT_NAME }}
-        if: ${{ env.super_secret == '' }}
-        run: |
-          echo "❌ The secret 'WEBAPI_PROJECT_NAME' has not been set."
-          echo "➡️ Go to Settings > Secrets and Variables > Actions to create it."
-          exit 1
-
   build:
     runs-on: windows-latest
-    needs: check
     permissions:
       contents: read
 
