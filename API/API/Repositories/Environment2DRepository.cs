@@ -59,12 +59,7 @@ namespace API.Repositories
             using var connection = CreateConnection();
             return await connection.ExecuteAsync("DELETE FROM Environment2D WHERE Id = @Id", new { Id = id }) > 0;
         }
-        public async Task<IEnumerable<Object2D>> GetByEnvironmentIdAsync(Guid environmentId)
-        {
-            using var connection = CreateConnection();
-            var sql = "SELECT * FROM Object2D WHERE EnvironmentId = @EnvironmentId";
-            return await connection.QueryAsync<Object2D>(sql, new { EnvironmentId = environmentId });
-        }
+        
     }
 
 }
