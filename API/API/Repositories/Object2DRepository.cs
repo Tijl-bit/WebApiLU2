@@ -6,7 +6,7 @@ using System.Data;
 
 namespace API.Repositories
 {
-    public class Object2DRepository : ControllerBase
+    public class Object2DRepository : IObject2DRepository
 
 
     {
