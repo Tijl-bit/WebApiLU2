@@ -1,16 +1,10 @@
-name: Build, Test and Deploy a .NET Core WebApi to Azure App Service
-
-env:
-  app-name: 'TijlsWebsite'
-  DOTNET_CORE_VERSION: 9.0.x
-  PUBLISH_DIRECTORY: ./publish
+name: Build and deploy ASP.Net Core app to Azure Web App - TijlsWebsite
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
 jobs:
   check:
     runs-on: ubuntu-latest
