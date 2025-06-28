@@ -74,12 +74,16 @@ namespace API.Controllers
 
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
 
+            // ✅ Check if user is authenticated
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User is not authenticated.");
+
             // ✅ Validate Name
             if (string.IsNullOrWhiteSpace(environment.Name))
                 return BadRequest("Environment name cannot be empty.");
 
-            if (environment.Name.Length > 25) // adjust max length as needed
-                return BadRequest("Environment name cannot be longer than 50 characters.");
+            if (environment.Name.Length > 25)
+                return BadRequest("Environment name cannot be longer than 25 characters.");
 
             var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
             var userEnvironmentCount = existingEnvironments.Count();
