@@ -22,6 +22,12 @@ namespace API.Repositories
 
             _connectionString = connectionString;
         }
+        public async Task<IEnumerable<Object2D>> GetAllAsync()
+        {
+            using var connection = CreateConnection();
+            var sql = "SELECT * FROM Object2D";
+            return await connection.QueryAsync<Object2D>(sql);
+        }
 
 
 
