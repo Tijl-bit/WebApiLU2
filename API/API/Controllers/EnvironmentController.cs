@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using API.Models;
 using API.Repositories;
 using API.Services;
@@ -7,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/environments")]
     public class EnvironmentController : ControllerBase
@@ -20,93 +24,98 @@ namespace API.Controllers
             _environment2DRepository = environment2DRepository;
         }
 
+        // GET all environments for the authenticated user
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Environment2D>>> GetEnvironments()
         {
-            var id = _authenticationService.GetCurrentAuthenticatedUserId();
-            return Ok(await _environment2DRepository.GetAllAsync(id));
+            var userId = _authenticationService.GetCurrentAuthenticatedUserId();
+            return Ok(await _environment2DRepository.GetAllAsync(userId));
         }
 
+        // GET a specific environment by ID (only if owned by current user)
         [HttpGet("{id}")]
         public async Task<ActionResult<Environment2D>> GetEnvironment(Guid id)
         {
             var env = await _environment2DRepository.GetByIdAsync(id);
-            return env == null ? NotFound() : Ok(env);
+            var currentUserId = _authenticationService.GetCurrentAuthenticatedUserId();
+
+            if (env == null)
+                return NotFound();
+
+            if (env.OwnerUserId != currentUserId)
+                return Unauthorized("You are not allowed to access this environment.");
+
+            return Ok(env);
         }
 
+        // DELETE environment (only if owned by current user)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEnvironment(Guid id)
         {
             var env = await _environment2DRepository.GetByIdAsync(id);
+
             if (env == null)
                 return NotFound();
 
-            // Optional: Only allow the owner to delete
             var currentUserId = _authenticationService.GetCurrentAuthenticatedUserId();
             if (env.OwnerUserId != currentUserId)
                 return Unauthorized("You are not allowed to delete this environment.");
 
             await _environment2DRepository.DeleteAsync(id);
-            return NoContent(); // 204 No Content is standard for successful deletes
+            return NoContent();
         }
 
-
-
+        // POST new environment (limit to 5 per user)
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateEnvironment(PostEnvironment2D environment)
         {
-
-
             if (environment == null)
                 return BadRequest("Invalid environment object");
 
-            // Get current user ID
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
 
-            // Ensure that the user is authenticated and has a valid userId
-            if (userId == null)
-                return Unauthorized("User is not authenticated");
-            Environment2D environ = new Environment2D()
+            var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
+            var userEnvironmentCount = existingEnvironments.Count();
+
+            if (userEnvironmentCount >= 5)
+                return BadRequest("You can only have a maximum of 5 worlds.");
+
+            var environ = new Environment2D
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 OwnerUserId = userId,
                 Name = environment.Name,
                 MaxLength = environment.MaxLength,
                 MaxHeight = environment.MaxHeight
             };
-           
-            // Get all environments and count how many this user owns
-
-            var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
-            var userEnvironmentCount = existingEnvironments.Count(e => e.OwnerUserId == userId);
-
-            // Check max limit
-            if (userEnvironmentCount >= 5)
-                return BadRequest("You can only have a maximum of 5 worlds.");
-
-            // Set the ID if it's not set
-            if (environ.Id == Guid.Empty)
-            {
-                environ.Id = Guid.NewGuid();
-            }
 
             var id = await _environment2DRepository.InsertAsync(environ);
-            return CreatedAtAction(nameof(GetEnvironment), new { id = id }, id);
+            return CreatedAtAction(nameof(GetEnvironment), new { id }, id);
         }
 
+        // PUT update environment (only if owned by current user)
         [HttpPut]
         public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
         {
-            if (environment == null)
+            if (environment == null || environment.Id == Guid.Empty)
                 return BadRequest("Invalid environment object");
 
-            if (environment.Id == Guid.Empty)
-                return BadRequest("Invalid ID");
+            var currentUserId = _authenticationService.GetCurrentAuthenticatedUserId();
 
-            if (environment.OwnerUserId != _authenticationService.GetCurrentAuthenticatedUserId())
-                return Unauthorized("User is not allowed to view the environment");
+            var existingEnv = await _environment2DRepository.GetByIdAsync(environment.Id);
+            if (existingEnv == null)
+                return NotFound();
 
-            return Ok("Environment2D object updated");
+            if (existingEnv.OwnerUserId != currentUserId)
+                return Unauthorized("You are not allowed to update this environment.");
+
+            // Only allow update of Name, MaxHeight, MaxLength
+            existingEnv.Name = environment.Name;
+            existingEnv.MaxHeight = environment.MaxHeight;
+            existingEnv.MaxLength = environment.MaxLength;
+
+            await _environment2DRepository.UpdateAsync(existingEnv);
+            return Ok("Environment updated successfully.");
         }
     }
 }
