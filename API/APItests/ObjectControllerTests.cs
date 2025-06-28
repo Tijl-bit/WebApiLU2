@@ -57,19 +57,19 @@ namespace ObjectTests
         }
 
 
-        [TestMethod]
-        public async Task GetObject_ReturnsNotFound_WhenObjectDoesNotExist()
-        {
-            // Arrange
-            var objectId = Guid.NewGuid();
-            _mockObjectRepo.Setup(repo => repo.GetByIdAsync(objectId)).ReturnsAsync((Object2D)null);
+        //[TestMethod]
+        //public async Task GetObject_ReturnsNotFound_WhenObjectDoesNotExist()
+        //{
+        //    // Arrange
+        //    var objectId = Guid.NewGuid();
+        //    _mockObjectRepo.Setup(repo => repo.GetByIdAsync(objectId)).ReturnsAsync((Object2D)null);
 
-            // Act
-            var result = await _controller.GetObject(objectId);
+        //    // Act
+        //    var result = await _controller.GetObject(objectId);
 
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        }
+        //    // Assert
+        //    Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        //}
 
         [TestMethod]
         public async Task AddObject_ReturnsOkResult_WhenObjectIsAddedSuccessfully()

@@ -27,13 +27,10 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetObjects()
+        public async Task<ActionResult<IEnumerable<Object2D>>> GetObjects()
         {
-            var objects = await _objectRepo.GetAllAsync();
-            return Ok(objects);
+            return Ok(await _objectRepo.GetAllAsync());
         }
-
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Object2D>> GetObject(Guid id)
@@ -89,10 +86,7 @@ namespace API.Controllers
         [HttpGet("by-environment")]
         public async Task<IActionResult> GetByEnvironment([FromQuery] Guid environmentId)
         {
-            var userId = _authService.GetCurrentAuthenticatedUserId();
-
             var objects = await _objectRepo.GetByEnvironmentIdAsync(environmentId);
-
             return Ok(objects);
         }
 
