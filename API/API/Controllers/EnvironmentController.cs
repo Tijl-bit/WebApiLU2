@@ -74,6 +74,13 @@ namespace API.Controllers
 
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
 
+            // ✅ Validate Name
+            if (string.IsNullOrWhiteSpace(environment.Name))
+                return BadRequest("Environment name cannot be empty.");
+
+            if (environment.Name.Length > 50) // adjust max length as needed
+                return BadRequest("Environment name cannot be longer than 50 characters.");
+
             var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
             var userEnvironmentCount = existingEnvironments.Count();
 
@@ -92,6 +99,7 @@ namespace API.Controllers
             var id = await _environment2DRepository.InsertAsync(environ);
             return CreatedAtAction(nameof(GetEnvironment), new { id }, id);
         }
+
 
         // PUT update environment (only if owned by current user)
         [HttpPut]
