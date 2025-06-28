@@ -78,7 +78,7 @@ namespace API.Controllers
             if (string.IsNullOrWhiteSpace(environment.Name))
                 return BadRequest("Environment name cannot be empty.");
 
-            if (environment.Name.Length > 50) // adjust max length as needed
+            if (environment.Name.Length > 25) // adjust max length as needed
                 return BadRequest("Environment name cannot be longer than 50 characters.");
 
             var existingEnvironments = await _environment2DRepository.GetAllAsync(userId);
