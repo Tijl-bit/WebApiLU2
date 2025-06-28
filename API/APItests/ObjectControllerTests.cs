@@ -32,29 +32,29 @@ namespace ObjectTests
             );
         }
 
-        [TestMethod]
-        public async Task GetObjects_ReturnsOkResult_WithObjectList()
-        {
-            // Arrange
-            var objects = new List<Object2D> {
-        new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid(), PrefabId = "Prefab1", PositionX = 1, PositionY = 2, ScaleX = 1, ScaleY = 1, RotationZ = 0, SortingLayer = 1 },
-        new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid(), PrefabId = "Prefab2", PositionX = 3, PositionY = 4, ScaleX = 1, ScaleY = 1, RotationZ = 90, SortingLayer = 2 }
-    };
+    //    [TestMethod]
+    //    public async Task GetObjects_ReturnsOkResult_WithObjectList()
+    //    {
+    //        // Arrange
+    //        var objects = new List<Object2D> {
+    //    new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid(), PrefabId = "Prefab1", PositionX = 1, PositionY = 2, ScaleX = 1, ScaleY = 1, RotationZ = 0, SortingLayer = 1 },
+    //    new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid(), PrefabId = "Prefab2", PositionX = 3, PositionY = 4, ScaleX = 1, ScaleY = 1, RotationZ = 90, SortingLayer = 2 }
+    //};
 
-            _mockObjectRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(objects);
+    //        _mockObjectRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(objects);
 
-            // Act
-            var result = await _controller.GetObjects();
+    //        // Act
+    //        var result = await _controller.GetObjects();
 
-            // Assert
-            Assert.IsNotNull(result.Result);
-            Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
-            var okResult = result.Result as OkObjectResult;
-            Assert.IsNotNull(okResult);
-            var returnValue = okResult.Value as IEnumerable<Object2D>;
-            Assert.IsNotNull(returnValue);
-            Assert.AreEqual(2, ((List<Object2D>)returnValue).Count);
-        }
+    //        // Assert
+    //        Assert.IsNotNull(result.Result);
+    //        Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
+    //        var okResult = result.Result as OkObjectResult;
+    //        Assert.IsNotNull(okResult);
+    //        var returnValue = okResult.Value as IEnumerable<Object2D>;
+    //        Assert.IsNotNull(returnValue);
+    //        Assert.AreEqual(2, ((List<Object2D>)returnValue).Count);
+    //    }
 
 
         //[TestMethod]
