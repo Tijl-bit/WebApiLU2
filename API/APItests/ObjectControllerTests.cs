@@ -47,8 +47,8 @@ namespace ObjectTests
             var result = await _controller.GetObjects();
 
             // Assert
-            Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
-            var okResult = result.Result as OkObjectResult;
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+            var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult);
             var returnValue = okResult.Value as IEnumerable<Object2D>;
             Assert.IsNotNull(returnValue);
@@ -66,7 +66,7 @@ namespace ObjectTests
             var result = await _controller.GetObject(objectId);
 
             // Assert
-            Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult));
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
         [TestMethod]
