@@ -32,7 +32,7 @@ namespace API.Repositories
             return await connection.QuerySingleOrDefaultAsync<Environment2D>("SELECT * FROM Environment2D WHERE Id = @Id", new { Id = id });
         }
 
-        // New method to check if environment with same name and owner exists
+        
         public async Task<bool> ExistsWithNameAsync(string ownerUserId, string name)
         {
             using var connection = CreateConnection();
@@ -48,7 +48,7 @@ namespace API.Repositories
                 throw new ArgumentException("OwnerUserId cannot be null");
             }
 
-            // Check for duplicates before inserting
+            
             bool exists = await ExistsWithNameAsync(environment.OwnerUserId, environment.Name);
             if (exists)
             {

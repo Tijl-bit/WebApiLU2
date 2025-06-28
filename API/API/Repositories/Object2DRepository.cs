@@ -30,13 +30,13 @@ namespace API.Repositories
             return await connection.QueryAsync<Object2D>("SELECT * FROM Object2D");
         }
 
-        public async Task<Object2D> GetByIdAsync(Guid id) // Gebruik Guid
+        public async Task<Object2D> GetByIdAsync(Guid id) 
         {
             using var connection = CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<Object2D>("SELECT * FROM Object2D WHERE Id = @Id", new { Id = id });
         }
 
-        public async Task<Guid> InsertAsync(Object2D object2D) // Return type Guid
+        public async Task<Guid> InsertAsync(Object2D object2D) 
         {
             using var connection = CreateConnection();
             object2D.Id = Guid.NewGuid(); // Genereer een nieuwe Guid voor het object

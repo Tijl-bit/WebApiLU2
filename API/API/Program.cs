@@ -10,11 +10,11 @@ using API;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Use the proper way to get the connection string
+//Use the proper way to get the connection string
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 Console.WriteLine($"🔍 Checking SQL Connection: {(string.IsNullOrWhiteSpace(connectionString) ? "Not Found" : "Found")}");
 
-// 🔐 Identity and Authentication
+// Identiteit
 builder.Services.AddAuthorization();
 builder.Services
     .AddIdentityApiEndpoints<IdentityUser>(options =>
@@ -43,25 +43,25 @@ builder.Services.AddOptions<BearerTokenOptions>(IdentityConstants.BearerScheme)
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthenticationService, AspNetIdentityAuthenticationService>();
 
-// ✅ Register database and custom repositories
+// Register database and custom repositories
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Fix: Use factory method overload to register repositories
+// Use factory method overload to register repositories
 builder.Services.AddSingleton<IEnvironment2DRepository>(provider => (IEnvironment2DRepository)new Environment2DRepository(connectionString));
 builder.Services.AddSingleton<IObject2DRepository>(provider => (IObject2DRepository)new Object2DRepository(connectionString));
 
-// ✅ Add basic services
+// Add basic services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ✅ Logging connection string status
+// Logging connection string status
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(connectionString);
 
-// 🔧 Error handling, Swagger, etc.
+// Error handling, Swagger, etc.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -69,7 +69,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// ✅ Correct middleware order
+// Correct middleware order
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -90,7 +90,7 @@ app.MapPost("/logout", async (
     return Results.Unauthorized();
 });
 
-// 🔍 Root health check
+// Root health check
 app.MapGet("/", () => $"The API is up. Connection string found: {(sqlConnectionStringFound ? "true" : "false")}");
 
 app.Run();

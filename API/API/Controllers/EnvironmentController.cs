@@ -32,7 +32,7 @@ namespace API.Controllers
             return Ok(await _environment2DRepository.GetAllAsync(userId));
         }
 
-        // GET a specific environment by ID (only if owned by current user)
+        // GET a specific environment by ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Environment2D>> GetEnvironment(Guid id)
         {
@@ -65,7 +65,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST new environment (limit to 5 per user)
+        
         [HttpPost]
         public async Task<ActionResult<Guid>> CreateEnvironment(PostEnvironment2D environment)
         {
@@ -74,11 +74,11 @@ namespace API.Controllers
 
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
 
-            // ✅ Check if user is authenticated
+            
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized("User is not authenticated.");
 
-            // ✅ Validate Name
+            
             if (string.IsNullOrWhiteSpace(environment.Name))
                 return BadRequest("Environment name cannot be empty.");
 
@@ -104,7 +104,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetEnvironment), new { id }, id);
         }
 
-        // PUT update environment (only if owned by current user)
+        
         [HttpPut]
         public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
         {

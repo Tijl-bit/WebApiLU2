@@ -29,7 +29,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Object2D>>> GetObjects()
         {
-            // Optional: Secure this to only return objects from environments the user owns
+          
             var userId = _authService.GetCurrentAuthenticatedUserId();
             var environments = await _envRepo.GetAllAsync(userId);
             var envIds = environments.Select(e => e.Id).ToHashSet();
