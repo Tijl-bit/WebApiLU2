@@ -83,9 +83,11 @@ namespace API.Controllers
         {
             return await _objectRepo.DeleteAsync(id) ? NoContent() : NotFound();
         }
+
         [HttpGet("by-environment")]
         public async Task<IActionResult> GetByEnvironment([FromQuery] Guid environmentId)
         {
+            
             var objects = await _objectRepo.GetByEnvironmentIdAsync(environmentId);
             return Ok(objects);
         }
