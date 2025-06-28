@@ -26,7 +26,14 @@ namespace API.Controllers
             _authService = authService;
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> GetObjects()
+        {
+            var objects = await _objectRepo.GetAllAsync();
+            return Ok(objects);
+        }
+
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Object2D>> GetObject(Guid id)
