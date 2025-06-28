@@ -20,6 +20,7 @@ builder.Services
     .AddIdentityApiEndpoints<IdentityUser>(options =>
     {
         options.User.RequireUniqueEmail = true;
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
         options.SignIn.RequireConfirmedAccount = false;
         options.SignIn.RequireConfirmedPhoneNumber = false;
         options.Tokens.AuthenticatorTokenProvider = null;
@@ -27,6 +28,7 @@ builder.Services
         options.Password.RequireDigit = true;
         options.Password.RequireUppercase = true;
         options.Password.RequireLowercase = true;
+        options.Password.RequiredLength = 8;
     })
     .AddDapperStores(options =>
     {

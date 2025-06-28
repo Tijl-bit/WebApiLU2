@@ -104,7 +104,6 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetEnvironment), new { id }, id);
         }
 
-
         // PUT update environment (only if owned by current user)
         [HttpPut]
         public async Task<IActionResult> UpdateEnvironment2D(Environment2D environment)
