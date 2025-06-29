@@ -48,13 +48,14 @@ namespace APItests
         [TestMethod]
         public async Task CreateEnvironment_ReturnsCreated()
         {
-            var url = $"{_baseUrl}/api/environments";
+            var uniqueName = "SystemTestEnv_" + Guid.NewGuid().ToString("N").Substring(0, 8);
             var newEnv = new
             {
-                Name = "SystemTestEnv",
+                Name = uniqueName,
                 MaxHeight = 5,
                 MaxLength = 5
             };
+            var url = $"{_baseUrl}/api/environments";
             var content = new StringContent(JsonConvert.SerializeObject(newEnv), Encoding.UTF8, "application/json");
 
             var response = await _client.PostAsync(url, content);
@@ -64,7 +65,6 @@ namespace APItests
 
             var responseData = await response.Content.ReadAsStringAsync();
             Assert.IsFalse(string.IsNullOrEmpty(responseData));
-            // You can add more validation here if needed
         }
 
         [TestMethod]
