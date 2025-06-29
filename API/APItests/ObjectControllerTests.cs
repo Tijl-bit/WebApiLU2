@@ -3,160 +3,167 @@ using API.Models;
 using API.Repositories;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ObjectTests
 {
     [TestClass]
     public class ObjectControllerTests
     {
-        private readonly Mock<IObject2DRepository> _mockObjectRepo;
-        private readonly Mock<IEnvironment2DRepository> _mockEnvRepo;
-        private readonly Mock<IAuthenticationService> _mockAuthService;
-        private readonly ObjectController _controller;
+        private Mock<IObject2DRepository> _objectRepoMock;
+        private Mock<IEnvironment2DRepository> _envRepoMock;
+        private Mock<IAuthenticationService> _authServiceMock;
+        private ObjectController _controller;
 
-        public ObjectControllerTests()
+        [TestInitialize]
+        public void Setup()
         {
-            _mockObjectRepo = new Mock<IObject2DRepository>();
-            _mockEnvRepo = new Mock<IEnvironment2DRepository>();
-            _mockAuthService = new Mock<IAuthenticationService>();
-
-            _controller = new ObjectController(
-                _mockObjectRepo.Object,
-                _mockEnvRepo.Object,
-                _mockAuthService.Object
-            );
+            _objectRepoMock = new Mock<IObject2DRepository>();
+            _envRepoMock = new Mock<IEnvironment2DRepository>();
+            _authServiceMock = new Mock<IAuthenticationService>();
+            _controller = new ObjectController(_objectRepoMock.Object, _envRepoMock.Object, _authServiceMock.Object);
         }
 
-    //    [TestMethod]
-    //    public async Task GetObjects_ReturnsOkResult_WithObjectList()
-    //    {
-    //        // Arrange
-    //        var objects = new List<Object2D> {
-    //    new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid(), PrefabId = "Prefab1", PositionX = 1, PositionY = 2, ScaleX = 1, ScaleY = 1, RotationZ = 0, SortingLayer = 1 },
-    //    new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid(), PrefabId = "Prefab2", PositionX = 3, PositionY = 4, ScaleX = 1, ScaleY = 1, RotationZ = 90, SortingLayer = 2 }
-    //};
+        [TestMethod]
+        public async Task GetObjects_ReturnsUserOwnedObjects()
+        {
+            var userId = "user123";
+            var envs = new List<Environment2D>
+            {
+                new Environment2D { Id = Guid.NewGuid(), OwnerUserId = userId }
+            };
+            var objs = new List<Object2D>
+            {
+                new Object2D { Id = Guid.NewGuid(), EnvironmentId = envs[0].Id }
+            };
 
-    //        _mockObjectRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(objects);
+            _authServiceMock.Setup(s => s.GetCurrentAuthenticatedUserId()).Returns(userId);
+            _envRepoMock.Setup(r => r.GetAllAsync(userId)).ReturnsAsync(envs);
+            _objectRepoMock.Setup(r => r.GetAllAsync()).ReturnsAsync(objs);
 
-    //        // Act
-    //        var result = await _controller.GetObjects();
+            var result = await _controller.GetObjects();
 
-    //        // Assert
-    //        Assert.IsNotNull(result.Result);
-    //        Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
-    //        var okResult = result.Result as OkObjectResult;
-    //        Assert.IsNotNull(okResult);
-    //        var returnValue = okResult.Value as IEnumerable<Object2D>;
-    //        Assert.IsNotNull(returnValue);
-    //        Assert.AreEqual(2, ((List<Object2D>)returnValue).Count);
-    //    }
-
-
-        //[TestMethod]
-        //public async Task GetObject_ReturnsNotFound_WhenObjectDoesNotExist()
-        //{
-        //    // Arrange
-        //    var objectId = Guid.NewGuid();
-        //    _mockObjectRepo.Setup(repo => repo.GetByIdAsync(objectId)).ReturnsAsync((Object2D)null);
-
-        //    // Act
-        //    var result = await _controller.GetObject(objectId);
-
-        //    // Assert
-        //    Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-        //}
+            var okResult = result.Result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+            var data = okResult.Value as IEnumerable<Object2D>;
+            Assert.AreEqual(1, data.Count());
+        }
 
         [TestMethod]
-        public async Task AddObject_ReturnsOkResult_WhenObjectIsAddedSuccessfully()
+        public async Task GetObject_ReturnsUnauthorized_IfUserNotOwner()
         {
-            // Arrange
-            var postObject = new PostObject2D
-            {
-                EnvironmentId = Guid.NewGuid().ToString(),
-                PrefabId = "Prefab1",
-                PositionX = 1,
-                PositionY = 2,
-                ScaleX = 1,
-                ScaleY = 1,
-                RotationZ = 0,
-                SortingLayer = 1
-            };
+            var objId = Guid.NewGuid();
+            var envId = Guid.NewGuid();
 
-            var object2D = new Object2D
+            _objectRepoMock.Setup(r => r.GetByIdAsync(objId)).ReturnsAsync(new Object2D { Id = objId, EnvironmentId = envId });
+            _envRepoMock.Setup(r => r.GetByIdAsync(envId)).ReturnsAsync(new Environment2D { Id = envId, OwnerUserId = "someoneElse" });
+            _authServiceMock.Setup(a => a.GetCurrentAuthenticatedUserId()).Returns("user123");
+
+            var result = await _controller.GetObject(objId);
+
+            Assert.IsInstanceOfType(result.Result, typeof(UnauthorizedObjectResult));
+        }
+
+        [TestMethod]
+        public async Task UpdateObject_ReturnsNoContent_IfSuccessful()
+        {
+            var obj = new Object2D
             {
                 Id = Guid.NewGuid(),
-                EnvironmentId = Guid.Parse(postObject.EnvironmentId),
-                PrefabId = postObject.PrefabId,
-                PositionX = postObject.PositionX,
-                PositionY = postObject.PositionY,
-                ScaleX = postObject.ScaleX,
-                ScaleY = postObject.ScaleY,
-                RotationZ = postObject.RotationZ,
-                SortingLayer = postObject.SortingLayer
+                EnvironmentId = Guid.NewGuid()
             };
 
-            _mockEnvRepo.Setup(repo => repo.GetByIdAsync(object2D.EnvironmentId)).ReturnsAsync(new Environment2D { OwnerUserId = "user123" });
-            _mockAuthService.Setup(service => service.GetCurrentAuthenticatedUserId()).Returns("user123");
+            _envRepoMock.Setup(r => r.GetByIdAsync(obj.EnvironmentId)).ReturnsAsync(new Environment2D { Id = obj.EnvironmentId, OwnerUserId = "user123" });
+            _authServiceMock.Setup(s => s.GetCurrentAuthenticatedUserId()).Returns("user123");
+            _objectRepoMock.Setup(r => r.UpdateAsync(obj)).ReturnsAsync(true);
 
-            _mockObjectRepo.Setup(repo => repo.InsertAsync(It.IsAny<Object2D>())).ReturnsAsync(object2D.Id);
+            var result = await _controller.UpdateObject(obj.Id, obj);
 
-            // Act
-            var result = await _controller.AddObject(postObject);
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
 
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+        [TestMethod]
+        public async Task DeleteObject_ReturnsNotFound_IfObjectNotFound()
+        {
+            _objectRepoMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Object2D)null);
+
+            var result = await _controller.DeleteObject(Guid.NewGuid());
+
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
+
+        [TestMethod]
+        public async Task GetByEnvironment_ReturnsUnauthorized_IfUserDoesNotOwnEnvironment()
+        {
+            var envId = Guid.NewGuid();
+            _envRepoMock.Setup(r => r.GetByIdAsync(envId)).ReturnsAsync(new Environment2D { Id = envId, OwnerUserId = "otherUser" });
+            _authServiceMock.Setup(s => s.GetCurrentAuthenticatedUserId()).Returns("user123");
+
+            var result = await _controller.GetByEnvironment(envId);
+
+            Assert.IsInstanceOfType(result, typeof(UnauthorizedObjectResult));
+        }
+
+        [TestMethod]
+        public async Task GetByEnvironment_ReturnsObjects_IfAuthorized()
+        {
+            var envId = Guid.NewGuid();
+            var objects = new List<Object2D> { new Object2D { Id = Guid.NewGuid(), EnvironmentId = envId } };
+
+            _envRepoMock.Setup(r => r.GetByIdAsync(envId)).ReturnsAsync(new Environment2D { Id = envId, OwnerUserId = "user123" });
+            _authServiceMock.Setup(s => s.GetCurrentAuthenticatedUserId()).Returns("user123");
+            _objectRepoMock.Setup(r => r.GetByEnvironmentIdAsync(envId)).ReturnsAsync(objects);
+
+            var result = await _controller.GetByEnvironment(envId);
+
             var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult);
-            Assert.AreEqual(postObject, okResult.Value);
+            var data = okResult.Value as IEnumerable<Object2D>;
+            Assert.AreEqual(1, data.Count());
         }
 
         [TestMethod]
-        public async Task AddObject_ReturnsUnauthorized_WhenUserDoesNotOwnEnvironment()
+        public async Task UpdateObject_ReturnsBadRequest_WhenIdMismatch()
         {
-            // Arrange
-            var postObject = new PostObject2D
-            {
-                EnvironmentId = Guid.NewGuid().ToString(),
-                PrefabId = "Prefab1",
-                PositionX = 1,
-                PositionY = 2,
-                ScaleX = 1,
-                ScaleY = 1,
-                RotationZ = 0,
-                SortingLayer = 1
-            };
+            var obj = new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid() };
 
-            var object2D = new Object2D
-            {
-                Id = Guid.NewGuid(),
-                EnvironmentId = Guid.Parse(postObject.EnvironmentId),
-                PrefabId = postObject.PrefabId,
-                PositionX = postObject.PositionX,
-                PositionY = postObject.PositionY,
-                ScaleX = postObject.ScaleX,
-                ScaleY = postObject.ScaleY,
-                RotationZ = postObject.RotationZ,
-                SortingLayer = postObject.SortingLayer
-            };
+            var result = await _controller.UpdateObject(Guid.NewGuid(), obj);
 
-            _mockEnvRepo.Setup(repo => repo.GetByIdAsync(object2D.EnvironmentId)).ReturnsAsync(new Environment2D { OwnerUserId = "user123" });
-            _mockAuthService.Setup(service => service.GetCurrentAuthenticatedUserId()).Returns("user456");
-
-            // Act
-            var result = await _controller.AddObject(postObject);
-
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(UnauthorizedObjectResult));
-            var unauthorizedResult = result as UnauthorizedObjectResult;
-            Assert.IsNotNull(unauthorizedResult);
-            Assert.AreEqual("You do not own this environment", unauthorizedResult.Value);
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
 
-        // Additional test cases can follow for other actions (PUT, DELETE, etc.)
+        [TestMethod]
+        public async Task UpdateObject_ReturnsUnauthorized_WhenUserNotOwner()
+        {
+            var obj = new Object2D { Id = Guid.NewGuid(), EnvironmentId = Guid.NewGuid() };
+
+            _envRepoMock.Setup(r => r.GetByIdAsync(obj.EnvironmentId)).ReturnsAsync(new Environment2D { Id = obj.EnvironmentId, OwnerUserId = "otherUser" });
+            _authServiceMock.Setup(s => s.GetCurrentAuthenticatedUserId()).Returns("user123");
+
+            var result = await _controller.UpdateObject(obj.Id, obj);
+
+            Assert.IsInstanceOfType(result, typeof(UnauthorizedObjectResult));
+        }
+
+        [TestMethod]
+        public async Task DeleteObject_ReturnsNoContent_WhenSuccessful()
+        {
+            var objId = Guid.NewGuid();
+            var envId = Guid.NewGuid();
+
+            _objectRepoMock.Setup(r => r.GetByIdAsync(objId)).ReturnsAsync(new Object2D { Id = objId, EnvironmentId = envId });
+            _envRepoMock.Setup(r => r.GetByIdAsync(envId)).ReturnsAsync(new Environment2D { Id = envId, OwnerUserId = "user123" });
+            _authServiceMock.Setup(s => s.GetCurrentAuthenticatedUserId()).Returns("user123");
+            _objectRepoMock.Setup(r => r.DeleteAsync(objId)).ReturnsAsync(true);
+
+            var result = await _controller.DeleteObject(objId);
+
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
     }
 }
