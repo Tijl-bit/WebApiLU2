@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7DE26996-92AC-458F-8FDE-EDBD802DD902}|APItests\\APItests.csproj|c:\\users\\tijl\\onedrive\\documents\\github\\webapilu2\\api\\apitests\\systemtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DE26996-92AC-458F-8FDE-EDBD802DD902}|APItests\\APItests.csproj|solutionrelative:apitests\\systemtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7DE26996-92AC-458F-8FDE-EDBD802DD902}|APItests\\APItests.csproj|c:\\users\\tijl\\onedrive\\documents\\github\\webapilu2\\api\\apitests\\environmentcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7DE26996-92AC-458F-8FDE-EDBD802DD902}|APItests\\APItests.csproj|solutionrelative:apitests\\environmentcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -116,6 +120,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Systemtests.cs",
+              "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\APItests\\Systemtests.cs",
+              "RelativeDocumentMoniker": "APItests\\Systemtests.cs",
+              "ToolTip": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\APItests\\Systemtests.cs",
+              "RelativeToolTip": "APItests\\Systemtests.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAQwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T00:24:48.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "EnvironmentControllerTests.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\APItests\\EnvironmentControllerTests.cs",
               "RelativeDocumentMoniker": "APItests\\EnvironmentControllerTests.cs",
@@ -128,7 +145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Environment2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Environment2DRepository.cs",
               "RelativeDocumentMoniker": "API\\Repositories\\Environment2DRepository.cs",
@@ -141,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "secrets.json",
               "DocumentMoniker": "C:\\Users\\tijl\\AppData\\Roaming\\Microsoft\\UserSecrets\\852da71d-b7b1-4b8e-b8bd-61a5ce882452\\secrets.json",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\852da71d-b7b1-4b8e-b8bd-61a5ce882452\\secrets.json",
@@ -154,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ObjectControllerTests.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\APItests\\ObjectControllerTests.cs",
               "RelativeDocumentMoniker": "APItests\\ObjectControllerTests.cs",
@@ -167,7 +184,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ObjectController.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Controllers\\ObjectController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ObjectController.cs",
@@ -180,7 +197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "EnvironmentController.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Controllers\\EnvironmentController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\EnvironmentController.cs",
@@ -193,7 +210,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "API.csproj",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.csproj",
               "RelativeDocumentMoniker": "API\\API.csproj",
@@ -206,7 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Object2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\Object2DRepository.cs",
               "RelativeDocumentMoniker": "API\\Repositories\\Object2DRepository.cs",
@@ -219,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "MSTestSettings.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\APItests\\MSTestSettings.cs",
               "RelativeDocumentMoniker": "APItests\\MSTestSettings.cs",
@@ -232,7 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "IEnvironment2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\IEnvironment2DRepository.cs",
               "RelativeDocumentMoniker": "API\\Repositories\\IEnvironment2DRepository.cs",
@@ -245,7 +262,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "AspNetIdentityAuthenticationService.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Services\\AspNetIdentityAuthenticationService.cs",
               "RelativeDocumentMoniker": "API\\Services\\AspNetIdentityAuthenticationService.cs",
@@ -258,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "IAuthenticationService.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Services\\IAuthenticationService.cs",
               "RelativeDocumentMoniker": "API\\Services\\IAuthenticationService.cs",
@@ -271,7 +288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "ApplicationDbcontext.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\ApplicationDbcontext.cs",
               "RelativeDocumentMoniker": "API\\ApplicationDbcontext.cs",
@@ -284,7 +301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Program.cs",
               "RelativeDocumentMoniker": "API\\Program.cs",
@@ -297,7 +314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "IObject2DRepository.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Repositories\\IObject2DRepository.cs",
               "RelativeDocumentMoniker": "API\\Repositories\\IObject2DRepository.cs",
@@ -310,7 +327,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "API.http",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\API.http",
               "RelativeDocumentMoniker": "API\\API.http",
@@ -323,7 +340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "EnvironmentObjectLoader.cs",
               "DocumentMoniker": "C:\\School\\Avans.D\\1.3\\ICT1.3\\UnityBackup\\LU2 Frontend\\Assets\\Scripts\\Object2d\\EnvironmentObjectLoader.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\School\\Avans.D\\1.3\\ICT1.3\\UnityBackup\\LU2 Frontend\\Assets\\Scripts\\Object2d\\EnvironmentObjectLoader.cs",
@@ -335,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Object2D.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Models\\Object2D.cs",
               "RelativeDocumentMoniker": "API\\Models\\Object2D.cs",
@@ -347,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "Environment2D.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Models\\Environment2D.cs",
               "RelativeDocumentMoniker": "API\\Models\\Environment2D.cs",
@@ -359,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "PostObject2D.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Models\\PostObject2D.cs",
               "RelativeDocumentMoniker": "API\\Models\\PostObject2D.cs",
@@ -371,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "PostEnvironment2D.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Models\\PostEnvironment2D.cs",
               "RelativeDocumentMoniker": "API\\Models\\PostEnvironment2D.cs",
@@ -383,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "Draggable.cs",
               "DocumentMoniker": "C:\\Users\\tijl\\Downloads\\Draggable.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Downloads\\Draggable.cs",
@@ -395,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\appsettings.json",
               "RelativeDocumentMoniker": "API\\appsettings.json",
@@ -407,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "API\\Properties\\launchSettings.json",
@@ -419,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\tijl\\OneDrive\\Documents\\GitHub\\WebApiLU2\\API\\API\\appsettings.Development.json",
               "RelativeDocumentMoniker": "API\\appsettings.Development.json",
